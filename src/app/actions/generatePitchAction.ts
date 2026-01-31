@@ -3,8 +3,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Pitch, PitchType, Slide, TextElement } from '@/types';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-
 interface GeneratePitchInput {
     pitchType: PitchType;
     pitchTitle: string;
@@ -20,6 +18,7 @@ export async function generatePitchAction(input: GeneratePitchInput): Promise<Pi
         throw new Error('GEMINI_API_KEY is not set');
     }
 
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `
